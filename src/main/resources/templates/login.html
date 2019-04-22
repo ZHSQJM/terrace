@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>登录页面</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+<meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+<meta name="author" content="yinqi">
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{css/materialdesignicons.min.css}" rel="stylesheet">
+<link th:href="@{css/style.min.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{js/jconfirm/jquery-confirm.min.css}">
+<style>
+.lyear-wrapper {
+    position: relative;
+}
+.lyear-login {
+    display: flex !important;
+    min-height: 100vh;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.login-center {
+    background: #fff;
+    min-width: 38.25rem;
+    padding: 2.14286em 3.57143em;
+    border-radius: 5px;
+    margin: 2.85714em 0;
+}
+.login-header {
+    margin-bottom: 1.5rem !important;
+}
+.login-center .has-feedback.feedback-left .form-control {
+    padding-left: 38px;
+    padding-right: 12px;
+}
+.login-center .has-feedback.feedback-left .form-control-feedback {
+    left: 0;
+    right: auto;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    z-index: 4;
+    color: #dcdcdc;
+}
+.login-center .has-feedback.feedback-left.row .form-control-feedback {
+    left: 15px;
+}
+</style>
+</head>
+  
+<body>
+<div class="row lyear-wrapper">
+  <div class="lyear-login">
+
+    <div class="login-center">
+      <div class="login-header text-center">
+        <a href="info.html"> 欢迎平台管理系统 </a>
+        <div class="error" style="color: red"></div>
+      </div>
+
+      <form class="m-t" role="form" id="login-form" >
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="用户名" name="username" id="username1" required="true">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="密码" name="password"  id="password1" required="true">
+        </div>
+        <button type="button" class="btn btn-primary   btn-login block full-width m-b">登 录</button>
+        <p class="text-muted text-center">  <a data-toggle="modal" data-target="#gridSystemModal" href="#">注册一个新账号</a>
+        </p>
+      </form>
+
+
+      <hr>
+      <footer class="col-sm-12 text-center">
+        <p class="m-b-0">Copyright © 2019 <a href="http://www.chenhao.com">陈豪</a>. All right reserved</p>
+      </footer>
+
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="gridSystemModalLabel">注册</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <form action=""  id="useradd">
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="username">用户名</label>
+                    <div class="col-md-7">
+                      <input class="form-control" type="text" id="username" name="username" placeholder="用户名">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="password">密码</label>
+                    <div class="col-md-7">
+                      <input class="form-control" type="password"  id="password" name="password" placeholder="请输入密码">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="tall">身高(cm)</label>
+                    <div class="col-md-7">
+                      <input class="form-control" type="text" id="tall" name="tall" placeholder="请输入身高">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="weight">体重(kg)</label>
+                    <div class="col-md-7">
+                      <input class="form-control" type="text" id="weight" name="weight" placeholder="请输入体重">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="age">年龄</label>
+                    <div class="col-md-7">
+                      <input class="form-control" type="text" id="age" name="age" placeholder="请输入年龄">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="sex">性别</label>
+                    <div class="col-md-7">
+                      <select class="form-control" id="sex" name="sex" size="1">
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="add()">点击保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" th:src="@{js/main.min.js}"></script>
+<script type="text/javascript" th:src="@{js/jquery.form.js}"></script>
+<!--对话框-->
+<script th:src="@{js/jconfirm/jquery-confirm.min.js}"></script>
+<script type="text/javascript" th:src="@{js/bootstrap-notify.min.js}"></script>
+<script type="text/javascript" th:src="@{js/lightyear.js}"></script>
+<script type="text/javascript">
+    $(".btn-login").click(function () {
+        lightyear.loading('show');
+        var username = $("#username1").val()
+        console.log(username);
+        var password = $("#password1").val();
+        console.log(password);
+        if(username == "" || username ==null){
+            $(".error").html("用户名不能为空");
+            lightyear.loading('hide');
+            return false;
+        } if(password == "" || password ==null){
+            $(".error").html("密码不能为空");
+            lightyear.loading('hide');
+            return false;
+        }if(password.length<3 || password.length>12){
+            $(".error").html("密码长度在3-12位之间");
+            lightyear.loading('hide');
+            return false;
+        }
+        $.ajax({
+            type: "post",
+            url: "login",
+            data: $("#login-form").serialize(),
+            dataType: "json",
+            success: function (rt) {
+                console.log(rt);
+                if (rt.code ==200) {
+                    window.location.href ="/company/list";
+                }else{
+                    $(".error").html(rt.msg);
+                    lightyear.loading('hide');
+                }
+            }
+        });
+    });
+
+    function add() {
+        lightyear.loading('show');
+        var username = $("#username").val()
+        var password = $("#password").val();
+        var tall = $("#tall").val();
+        var weight = $("#weight").val();
+        var sex = $("#sex").val();
+        console.log(password);
+        if(username == "" || username ==null){
+            lightyear.notify("用户名不能为空", 'danger');
+            lightyear.loading('hide');
+            return false;
+        } if(password == "" || password ==null){
+            lightyear.notify("密码不能为空", 'danger');
+            lightyear.loading('hide');
+            return false;
+        }if(password.length<3 || password.length>12){
+            lightyear.notify("密码长度在3-12位之间", 'danger');
+            lightyear.loading('hide');
+            return false;
+        }
+        $("#useradd").ajaxSubmit({
+            type: "post",
+            url: "user/add",
+            data: $("#useradd").serialize(),
+            success: function(rt) { // data 保存提交后返回的数据，一般为 json 数据
+                // 此处可对 data 作相关处理
+                if(rt.code==200){
+                    lightyear.notify(rt.msg, 'success');
+                    setTimeout(function(){
+                        window.location.reload();
+                    },1000);
+                }else{
+                    lightyear.notify(rt.msg, 'danger');
+                }
+                lightyear.loading('hide');
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+
+        });
+    }
+</script>
+</body>
+</html>

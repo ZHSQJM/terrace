@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.springframework.org/schema/data/jaxb" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>功能列表</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+<meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+<meta name="author" content="yinqi">
+<link th:href="@{../css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{../css/materialdesignicons.min.css}" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" th:href="@{../js/jconfirm/jquery-confirm.min.css}">
+<link th:href="@{../css/style.min.css}" rel="stylesheet">
+</head>
+  
+<body>
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <aside th:replace="common/menu::menu"></aside>
+
+    <!--头部信息-->
+    <aside th:replace="common/header::header"></aside>
+
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-toolbar clearfix">
+                <form class="pull-right search-bar" method="get" action="" role="form">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                      公司名称
+                      </button>
+                    </div>
+                    <input type="text" class="form-control" value="" name="businessName"  placeholder="请输入业务名称 ">
+                  </div>
+                </form>
+
+                <div class="toolbar-btn-action">
+                  <a class="btn btn-primary m-r-5"  onclick="modaladd()"><i class="mdi mdi-plus"></i> 新增</a>
+                </div>
+              </div>
+              <div class="card-body">
+
+                  <div class="table-responsive">
+                      <table class="table">
+                    <thead>
+                      <tr>
+                          <th>编号</th>
+                          <th>类目名称</th>
+                          <th>业务名称</th>
+                          <th>创建时间</th>
+                          <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="data:${data.getContent()}">
+                        <td th:text="${dataStat.index+1}"></td>
+                        <td th:text="${data.categoryName}">super</td>
+                        <td th:text="${data.businessName}">super</td>
+                        <td th:text="${#dates.format(data.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-03-25 16:38:02</td>
+                        <td>
+                          <div class="btn-group">
+                            <a  class="btn btn-xs btn-default"  data-toggle="modal" th:onclick="|onupdate(${data.id})|" title="编辑" ><i class="mdi mdi-pencil"></i></a>
+                            <a  class="btn btn-xs btn-default "th:onclick="|deletebyId(${data.id})|" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+               <div th:replace="common/page :: pageNav(${data})"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form action="" method="post" id="add-business">
+                                <input type="hidden" name="id" id="id">
+                              <div class="form-group">
+                                  <div class="form-group">
+                                      <label class="col-md-3 control-label" for="categoryName">类目名称</label>
+                                      <div class="col-md-7">
+                                          <input class="form-control" type="text"  id="categoryName" name="categoryName" placeholder="请输入类目名称">
+                                      </div>
+                                  </div>
+                              </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="businessId">业务类型</label>
+                                    <div class="col-md-7">
+                                        <select class="form-control" id="businessId" name="businessId" size="1">
+                                        <option th:each="business:${all}" th:value="${business.id}" th:text="${business.businessName}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="add()">点击保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" th:src="@{../../js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/main.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/jquery.form.js}"></script>
+<!--对话框-->
+<script th:src="@{../../js/jconfirm/jquery-confirm.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/bootstrap-notify.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/lightyear.js}"></script>
+<script type="text/javascript">
+
+    function modaladd(){
+        $("#gridSystemModalLabel").html("新增");
+        $("#gridSystemModal").modal();
+    }
+
+    function  add() {
+        lightyear.loading('show');
+        $("#add-business").ajaxSubmit({
+            type: 'post', // 提交方式 get/post
+            url: 'add', // 需要提交的 url
+            data:$('#add-business').serialize(),
+            success: function(rt) { // data 保存提交后返回的数据，一般为 json 数据
+                // 此处可对 data 作相关处理
+                if(rt.code==200){
+                    lightyear.notify(rt.msg, 'success');
+                    setTimeout(function(){
+                        window.location.reload();
+                    },1000);
+                }else{
+                    lightyear.notify(rt.msg, 'danger');
+                }
+                lightyear.loading('hide');
+
+
+            }
+
+        });
+    }
+  function deletebyId(id){
+      $.alert({
+          title: '删除提示',
+          content: '您确定删除数据',
+          buttons: {
+              confirm: {
+                  text: '确认',
+                  btnClass: "btn-danger",
+                  action: function(){
+                      lightyear.loading('show');
+                      $.ajax({
+                          type : "delete",
+                          url : "delete/"+id,
+                          error : function() {
+                              $.alert('删除失败');
+                              lightyear.loading('hide');
+                          },
+                          success : function(rt) {
+                              if(rt.code==200){
+                                  lightyear.notify(rt.msg, 'success');
+                              }else{
+                                  lightyear.notify(rt.msg, 'danger');
+                              }
+                              lightyear.loading('hide');
+                              setTimeout(function(){
+                                  window.location.reload();
+                              },1000);
+                          }
+                      });
+                  }
+              },
+              cancel: {
+                  text: '取消',
+                  action: function () {
+                      $.alert('取消成功');
+                  }
+              }
+          }
+      });
+  }
+
+</script>
+</body>
+</html>

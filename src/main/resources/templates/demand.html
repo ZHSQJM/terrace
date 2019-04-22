@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.springframework.org/schema/data/jaxb" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>需求列表</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+<meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+<meta name="author" content="yinqi">
+<link th:href="@{../css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{../css/materialdesignicons.min.css}" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" th:href="@{../js/jconfirm/jquery-confirm.min.css}">
+<link th:href="@{../css/style.min.css}" rel="stylesheet">
+</head>
+  
+<body>
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <aside th:replace="common/menu::menu"></aside>
+
+    <!--头部信息-->
+    <aside th:replace="common/header::header"></aside>
+
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-toolbar clearfix">
+                <form class="pull-right search-bar" method="get" action="" role="form">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                      是否可以议价
+                      </button>
+                    </div>
+                      <div class="col-md-9">
+                          <select class="form-control" th:filed ="${demand.flag}" th:value="${demand.flag}" name="flag" size="1"  onchange="gradeChange(this.value)">
+                              <option value="">全部</option>
+                              <option value="1" th:selected="${demand.flag==1} ">是</option>
+                              <option value="0" th:selected="${demand.flag==0} ">否</option>
+                          </select>
+                      </div>
+                  </div>
+                </form>
+
+              </div>
+              <div class="card-body">
+
+                  <div class="table-responsive">
+                      <table class="table">
+                    <thead>
+                      <tr>
+                        <th>编号</th>
+                        <th>项目名称</th>
+                          <th>预交时间</th>
+                          <th>工作日</th>
+                          <th>价格</th>
+                          <th>是否可以议价</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="data:${data.getContent()}">
+                        <td th:text="${dataStat.index+1}"></td>
+                        <td th:text="${data.projectName}">super</td>
+                        <td th:text="${#dates.format(data.expectDate, 'yyyy-MM-dd HH:mm:ss')}">2019-03-25 16:38:02</td>
+                        <td th:text="${data.day}">super</td>
+                        <td th:text="${data.price}">super</td>
+                        <td >
+                            <span th:if="${data.flag==1}">是</span>
+                            <span th:if="${data.flag==0}">否</span>
+                        </td>
+                        <td th:text="${data.createTime}">super</td>
+                        <td>
+                          <div class="btn-group">
+                            <a class="btn btn-xs btn-default"  data-toggle="modal" th:onclick="|onupdate(${data.id})|" title="详情" ><i class="mdi mdi-pencil"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+               <div th:replace="common/page :: pageNav(${data})"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form action="" method="post" id="add-business">
+                                <input type="hidden" name="id" id="id">
+                              <div class="form-group">
+                                  <div class="form-group">
+                                      <label class="col-md-3 control-label" for="businessName">业务名称</label>
+                                      <div class="col-md-7">
+                                          <input class="form-control" type="text"  id="businessName" name="businessName" placeholder="请输入业务名称">
+                                      </div>
+                                  </div>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="add()">点击保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" th:src="@{../../js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/main.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/jquery.form.js}"></script>
+<!--对话框-->
+<script th:src="@{../../js/jconfirm/jquery-confirm.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/bootstrap-notify.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/lightyear.js}"></script>
+<script type="text/javascript">
+    var websocket = null;
+
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://47.97.182.0:8080/websocket");
+    } else {
+        lightyear.notify("该浏览器不支持websocket", 'danger');
+    }
+    websocket.onopen = function (event) {
+    }
+    websocket.onclose = function (event) {
+    }
+    websocket.onmessage = function (event) {
+        lightyear.notify(event.data, 'success');
+        setTimeout(function(){
+            window.location.reload();
+        },5000);
+        //弹窗提醒，播放音乐
+    }
+    websocket.onerror = function () {
+        alert("websocket通信发生错误");
+    }
+    websocket.onbeforeunload = function () {
+        websocket.Close();
+    }
+
+    function gradeChange(id) {
+        window.location.href="/demand/list?flag="+id;
+    }
+</script>
+</body>
+</html>

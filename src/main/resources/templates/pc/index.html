@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+<title>首页</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+ <!--theme-style <link th:href="@{../css/bootstrap.min.css}" rel="stylesheet">-->
+ <link th:href="@{../pc/css/style.css}" rel="stylesheet" type="text/css" media="all" />
+ <!--//theme-style-->
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <!--fonts-->
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+ <!--//fonts-->
+ <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+ <script tsrc="@{../pc/js/jquery.easydropdown.js}"></script>
+ <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script language="JScript">
+	 $(function(){
+		 var item="<div class='col-md-2'> <a href='#' class='thumbnail'> <img src='imgsrc' alt='百度公司' class='img-thumbnail'>"+
+			 		 "<div class='caption'> <h4>companyName</h4> </div> </a>  </div>";
+		  $.get("http://47.97.182.0:8080/treeace/getbuinsee", 
+		  function(data,status){
+			  console.log("data",data);
+			  console.log("status",status);
+			  var mydata=data.data;
+			  if(status == "success"){
+				  for(var i=0;i<mydata.length;i++){ 
+					  $(".navbar-brand").eq(i).html(mydata[i].businessName);
+					  var category=mydata[i].category; 
+					   for(var j=0;j<category.length;j++){ 
+					   		$(".navbar").eq(i).find("li").eq(j).find("a").html(category[j].categoryName);
+						   var company=category[j].company; 
+						    for(var k=0;k<company.length;k++){ 
+								    var myitem=item;
+									myitem=myitem.replace(/imgsrc/,company[k].logo);
+									myitem=myitem.replace(/companyName/,company[k].companyName); 
+						    		$(".tab-content").eq(i).find(".tab-pane").eq(j).find(".row").append(myitem);      
+						    }  
+					   }
+				  }
+			  }else{
+				  alert("服务器异常");
+			  }
+			  // $(".tab-content").eq(0).find(".tab-pane").eq(0).html(item); 
+		  });
+		  
+	 })
+	 
+ </script>
+ 
+</head>
+<body> 
+	<!--header-->
+	<div class="header">
+		<div class="top-header">
+			<div class="container">
+				<div class="top-header-left">
+					<ul class="support">
+						<li><a href="#"><label> </label></a></li>
+						<li><a href="#">24x7 live<span class="live"> support</span></a></li>
+					</ul>
+					<!-- <ul class="support">
+						<li class="van"><a href="#"><label> </label></a></li>
+						<li><a href="#">Free shipping <span class="live">on order over 500</span></a></li>
+					</ul> -->
+					<div class="clearfix"> </div>
+				</div>
+				<div class="top-header-right">
+				 <div class="down-top">
+						
+						 <select tabindex="4" class="dropdown">
+						 	<option value="" class="label">English</option>
+							<option value="1">Japanese</option>
+							<option value="2">French</option>
+							<option value="3">German</option>
+						  </select>
+					 </div>
+					<div class="down-top top-down">
+						
+						 <select tabindex="4" class="dropdown ">
+						 	<option value="" class="label">Currency :USD</option>
+							<option value="1">Dollar</option>
+							<option value="2">Euro</option>
+						  </select>
+					 </div>
+					
+					 <!---->
+					<div class="clearfix"> </div>	
+				</div>
+				<div class="clearfix"> </div>		
+			</div>
+		</div>
+		<div class="bottom-header">
+			<div class="container">
+				<div class="header-bottom-left">
+					<div class="logo">
+						<a href="index.html"><img  src="../pc/images/bab.jpg" style="border-radius: 5px;" width="250" height="80" ></a>
+					</div>
+					<!-- 搜索栏 -->
+					<div class="search">
+						<input type="text"  value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" >
+						<input type="submit"  value="搜索"> 
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="header-bottom-right">
+					<ul class="men-grid">
+						<li><a href="/contact"><span> </span>发布需求</a></li>
+						
+						<!-- <li><a href="login.html"><span> </span>我的账户</a></li> -->
+						<!-- <li class="login"><a href="login.html"><span> </span>LOGIN</a>|</li> -->
+						<li class="cart" data-toggle="modal" data-target="#myModal"><a href="#"><span> </span>技术咨询</a></li>
+					</ul>
+					<!-- <div class="sign-up-right">
+						<a href="register.html">SIGNUP</a>
+					</div> -->
+				</div>
+				<div class="clearfix"> </div>	
+			</div>
+		</div>
+	</div>
+	<!-- container --> 
+	<div class="container">
+		 <h2>合作公司</h2>
+		  <p><strong>提示:</strong>  合作公司都是经过BAB联盟认证，信用良好的公司，BAB联盟对提供商拥有者一套完整的奖惩机制</p>
+		 
+		 <!-- 导航栏 一 -->
+		 <nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">网站建设</a>
+			</div>
+			<div>
+				<ul class="nav nav-tabs nav-justified">
+					<li class="active"><a data-toggle="tab" href="#menu00">品牌官网</a></li>
+					<li><a data-toggle="tab" href="#menu01">电商网站</a></li>
+					<li><a data-toggle="tab" href="#menu02">门户网站</a></li>
+					<li><a data-toggle="tab" href="#menu03">营销网站</a></li>
+				</ul> 
+			</div>
+			</div>
+		</nav>  
+		  <!-- 导航栏 一 内容-->
+		 <div class="row">
+			  <div class="col-xs-1"> </div>
+			  <div class="col-xs-11"> 
+				  <div class="tab-content">  
+				  			<div id="menu00" class="tab-pane fade in active"> 
+							   <div class="row">
+									
+									
+								</div>
+				  			   
+				  			</div>
+				  			<div id="menu01" class="tab-pane fade">
+				  			  <div class="row">
+				  			  									 
+				  			   </div>
+				  			  
+				  			</div>
+				  			<div id="menu02" class="tab-pane fade">
+				  			  <div class="row"> 
+				  			   </div>
+				  			  
+				  			</div>
+				  			<div id="menu03" class="tab-pane fade">
+				  			  <div class="row">
+				  			  								
+				  			   </div>
+				  			  
+				  			</div>
+				  </div> 
+			  </div>
+		  </div>
+		   
+		 <!-- 导航栏 二 -->
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">网站建设</a>
+			</div>
+			<div>
+				<ul class="nav nav-tabs nav-justified">
+					<li class="active"><a data-toggle="tab" href="#menu10">品牌官网</a></li>
+					<li><a data-toggle="tab" href="#menu11">电商网站</a></li>
+					<li><a data-toggle="tab" href="#menu12">门户网站</a></li>
+					<li><a data-toggle="tab" href="#menu13">营销网站</a></li>
+				</ul> 
+			</div>
+			</div>
+		   </nav>  
+		<!-- 导航栏 二 内容-->
+		<div class="row">
+			  <div class="col-xs-1"> </div>
+			  <div class="col-xs-11"> 
+				  <div class="tab-content">  
+							<div id="menu10" class="tab-pane fade in active"> 
+							   <div class="row">
+									 
+								</div>
+							   
+							</div>
+							<div id="menu11" class="tab-pane fade">
+							  <div class="row"> 
+							   </div>
+							  
+							</div>
+							<div id="menu12" class="tab-pane fade">
+							  <div class="row">
+														 
+							   </div>
+							  
+							</div>
+							<div id="menu13" class="tab-pane fade">
+							  <div class="row">
+																 
+							   </div>
+							  
+							</div>
+				  </div> 
+			  </div>
+			 </div>
+			  
+		 <!-- 导航栏 三 -->
+		 <nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">网站建设</a>
+			</div>
+			<div>
+				<ul class="nav nav-tabs nav-justified">
+					<li class="active"><a data-toggle="tab" href="#menu20">品牌官网</a></li>
+					<li><a data-toggle="tab" href="#menu21">电商网站</a></li>
+					<li><a data-toggle="tab" href="#menu22">门户网站</a></li>
+					<li><a data-toggle="tab" href="#menu23">营销网站</a></li>
+				</ul> 
+			</div>
+			</div>
+		  </nav>  
+		<!-- 导航栏 三 内容-->
+		<div class="row">
+			  	  <div class="col-xs-1"> </div>
+			  	  <div class="col-xs-11"> 
+			  		  <div class="tab-content">  
+			  		  			<div id="menu20" class="tab-pane fade in active"> 
+			  					   <div class="row">
+			  							 
+			  					    </div>
+			  		  			   
+			  		  			</div>
+			  		  			<div id="menu21" class="tab-pane fade">
+			  		  			  <div class="row">
+			  		  			  								 
+			  		  			   </div>
+			  		  			  
+			  		  			</div>
+			  		  			<div id="menu22" class="tab-pane fade">
+			  		  			  <div class="row">
+			  		  			  									 
+			  		  			   </div>
+			  		  			  
+			  		  			</div>
+			  		  			<div id="menu23" class="tab-pane fade">
+			  		  			  <div class="row">
+			  		  			  									 
+			  		  			   </div>
+			  		  			  
+			  		  			</div>
+			  		  </div> 
+			  	  </div>
+			    </div>
+			     
+		 <!-- 导航栏 四 -->
+		 <nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">网站建设</a>
+			</div>
+			<div>
+				<ul class="nav nav-tabs nav-justified">
+					<li class="active"><a data-toggle="tab" href="#menu30">品牌官网</a></li>
+					<li><a data-toggle="tab" href="#menu31">电商网站</a></li>
+					<li><a data-toggle="tab" href="#menu32">门户网站</a></li>
+					<li><a data-toggle="tab" href="#menu33">营销网站</a></li>
+				</ul> 
+			</div>
+			</div>
+		 </nav>  
+		 <!-- 导航栏 四 内容-->
+		 <div class="row">
+			  <div class="col-xs-1"> </div>
+			  <div class="col-xs-11"> 
+				  <div class="tab-content">  
+							<div id="menu30" class="tab-pane fade in active"> 
+							   <div class="row">
+									 
+								</div>
+							   
+							</div>
+							<div id="menu31" class="tab-pane fade">
+							  <div class="row">
+							   </div>
+							  
+							</div>
+							<div id="menu32" class="tab-pane fade">
+							  <div class="row"> 
+							   </div>
+							  
+							</div>
+							<div id="menu33" class="tab-pane fade">
+							  <div class="row">
+																 
+							   </div>
+							  
+							</div>
+				  </div> 
+			  </div>
+		   </div>
+			
+		<!-- 导航栏 五 -->
+		 <nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">网站建设</a>
+			</div>
+			<div>
+				<ul class="nav nav-tabs nav-justified">
+					<li class="active"><a data-toggle="tab" href="#menu40">品牌官网</a></li>
+					<li><a data-toggle="tab" href="#menu41">电商网站</a></li>
+					<li><a data-toggle="tab" href="#menu42">门户网站</a></li>
+					<li><a data-toggle="tab" href="#menu43">营销网站</a></li>
+				</ul> 
+			</div>
+			</div>
+		</nav>  
+		 <!-- 导航栏 五 内容-->
+		 <div class="row">
+						  <div class="col-xs-1"> </div>
+						  <div class="col-xs-11"> 
+							  <div class="tab-content">  
+							  			<div id="menu40" class="tab-pane fade in active"> 
+										   <div class="row">
+												 
+										    </div>
+							  			   
+							  			</div>
+							  			<div id="menu41" class="tab-pane fade">
+							  			  <div class="row"> 
+							  			   </div>
+							  			  
+							  			</div>
+							  			<div id="menu42" class="tab-pane fade">
+							  			  <div class="row">
+							  			  								 
+							  			   </div>
+							  			  
+							  			</div>
+							  			<div id="menu43" class="tab-pane fade">
+							  			  <div class="row">
+							  			  									 
+							  			   </div>
+							  			  
+							  			</div>
+							  </div> 
+						  </div>
+					  </div>
+					   
+	 </div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" 
+							aria-hidden="true">×
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						提出你的疑惑，随后我们会与你联系
+					</h4>
+				</div>
+				<div class="modal-body">
+					  <form role="form">
+						<div class="form-group">
+						<label for="name">疑惑</label>
+						<textarea class="form-control" rows="3"></textarea>
+						<input type="password" class="form-control" id="inputPassword" placeholder="请输入你的手机号码">
+						</div> 
+					  </form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"  data-dismiss="modal">关闭 </button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"> 提交更改 </button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- footer -->
+	<!-- <div class="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="latter">
+					<h6>NEWS-LATTER</h6>
+					<div class="sub-left-right">
+						<form>
+							<input type="text" value="Enter email here"onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter email here';}" />
+							<input type="submit" value="SUBSCRIBE" />
+						</form>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="latter-right">
+					<p>FOLLOW US</p>
+					<ul class="face-in-to">
+						<li><a href="#"><span> </span></a></li>
+						<li><a href="#"><span class="facebook-in"> </span></a></li>
+						<div class="clearfix"> </div>
+					</ul>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="footer-bottom-cate">
+					<h6>CATEGORIES</h6>
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li ><a href="#">Dignissim neque</a></li>
+						<li ><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+						<li ><a href="#">Urna ac tortor sc</a></li>
+						<li><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Urna ac tortor sc</a></li>
+						<li ><a href="#">Eget nisi laoreet</a></li>
+						<li ><a href="#">Faciisis ornare</a></li>
+					</ul>
+				</div>
+				<div class="footer-bottom-cate bottom-grid-cat">
+					<h6>FEATURE PROJECTS</h6>
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li ><a href="#">Dignissim neque</a></li>
+						<li ><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+					</ul>
+				</div>
+				<div class="footer-bottom-cate">
+					<h6>TOP BRANDS</h6>
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li ><a href="#">Dignissim neque</a></li>
+						<li ><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+						<li ><a href="#">Urna ac tortor sc</a></li>
+						<li><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Urna ac tortor sc</a></li>
+						<li ><a href="#">Eget nisi laoreet</a></li>
+						<li ><a href="#">Faciisis ornare</a></li>
+					</ul>
+				</div>
+				<div class="footer-bottom-cate cate-bottom">
+					<h6>OUR ADDERSS</h6>
+					<ul>
+						<li>Aliquam metus  dui. </li>
+						<li>orci, ornareidquet</li>
+						<li> ut,DUI.</li>
+						<li >nisi, dignissim</li>
+						<li >gravida at.</li>
+						<li class="phone">PH : 6985792466</li>
+						<li class="temp"> <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+ -->
+</body>
+</html>

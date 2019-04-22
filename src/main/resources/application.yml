@@ -1,0 +1,78 @@
+spring:
+  datasource :
+    driverClassName : com.mysql.jdbc.Driver
+    url : jdbc:mysql://47.97.182.0:3306/terrace?useUnicode=true&amp;characterEncoding=UTF-8
+    username : root
+    password : root
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  jpa:
+    show-sql: false
+    database: MYSQL
+    hibernate:
+     ddl-auto: update
+    properties:
+     hibernate:
+      dialect : org.hibernate.dialect.MySQL5Dialect
+    #redis\u7684\u914D\u7F6E
+# thymeleaf
+  thymeleaf:
+   prefix: classpath:/templates/
+   check-template-location: true
+   suffix: .html
+   encoding: UTF-8
+   content-type: text/html
+   mode: HTML5
+   cache: false
+#\u4E0A\u4F20\u914D\u7F6E
+  http:
+      # multipart config
+    multipart:
+      enabled: true
+      file-size-threshold: 5MB
+      max-request-size: 20MB
+  jackson:
+    serialization: true
+
+server:
+  port: 8080
+
+#\u65E5\u5FD7\u8F93\u51FA
+#logging:
+ #   config: classpath:logback.xml
+info:
+  head: head
+  body: body
+management:
+  endpoints:
+    web:
+      exposure:
+        #\u52A0\u8F7D\u6240\u6709\u7684\u7AEF\u70B9\uFF0C\u9ED8\u8BA4\u53EA\u52A0\u8F7D\u4E86info\u3001health
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    #\u53EF\u4EE5\u5173\u95ED\u6307\u5B9A\u7684\u7AEF\u70B9
+    shutdown:
+      enabled: false
+
+terrace:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  keyid: LTAIGgKgsJ1c0vo3
+  keysecret: wvA4i7S7GtvNK4mpNyvcXjJdqdP5zN
+  bucketname: terrac
+  filehost: http://terrac.oss-cn-beijing.aliyuncs.com

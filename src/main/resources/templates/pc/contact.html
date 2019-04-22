@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc" xmlns:tth="http://www.springframework.org/schema/mvc">
+<head>
+<title>提交需求</title>
+ <link th:href="@{../pc/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen">
+ <!--theme-style-->
+ <link th:href="@{../pc/css/style.css}" rel="stylesheet" type="text/css" media="all" />
+ <!--//theme-style-->
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <!--fonts-->
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+ <!--//fonts-->
+ 
+ 
+ <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+ <script th:src="@{../pc/js/jquery.easydropdown.js}"></script>
+ <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+ <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+ 
+<script th:src="@{../pc/js/jquery.form.js}"></script>
+ <script th:src="@{../pc/js/plugins/layer/laydate/laydate.js}"></script>
+<style type="text/css"> 
+	.header_bgimg {
+		background-image:url(../pc/images/header_img.jpg);
+		background-size:cover;
+	} 
+	.error{
+	color:red;
+    }
+</style>
+<script>
+	//将form转为AJAX提交
+function ajaxSubmit(frm, fn) {
+    var dataPara = getFormJson(frm);
+    $.ajax({
+        url: frm.action,
+        type: frm.method,
+        data: dataPara,
+        success: fn
+    });
+}
+
+//将form中的值转换为键值对。
+function getFormJson(frm) {
+    var o = {};
+    var a = $(frm).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+
+    return o;
+}
+
+
+$(function(){
+	/* $('#registSubmit').on('submit', function(event){
+		// alert("hello")
+		 
+	  registPost();
+	 event.preventDefault(); //阻止form表单默认提交
+	}) */
+	 var option={
+		 target : $("#data"),
+		 url:"http://47.97.182.0:8080/treeace/postyouwant",
+		 type:"Post",
+		 success :function(){
+		    alert($("#data").data("target"));
+	     }
+	 }
+	 $("#registSubmit").validate();
+	 // $('#registSubmit').ajaxSubmit(option);
+	 
+})
+function registPost () {     
+   $("#showDataForm").ajaxSubmit(function(message) { 
+     alert(message);
+     console.log(message);
+   }); 
+   /*
+     或者用jquery.form.min.js提交 
+     $('#registSubmit').ajaxSubmit(function(message){
+        console.log(message);
+     })
+    */
+}
+
+function saveReport() { 
+// jquery 表单提交 
+$("#registSubmit").ajaxSubmit(function(message) { 
+  alert(message);
+  console.log(message);
+}); 
+ return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转 
+} 
+
+function save(){
+	 var form = document.getElementById('registSubmit'),
+        formData = new FormData(form);
+    $.ajax({
+        url:"http://47.97.182.0:8080/treeace/postyouwant",
+        type:"post",
+        data:formData,
+        processData:false,
+        contentType:false,
+        done: function (res) {
+            alert('finish:' + res);
+        },
+        success:function(res){
+            if(res){
+                alert("需求提交成功！请耐心等待客服联系");
+            }
+            console.log(res);
+        },
+        error:function(err){
+            alert("网络连接失败,稍后重试",err);
+        }
+    });
+
+    return false; 
+}
+</script>
+</head>
+<body> 
+    <div id="data"></div>
+	<!--header-->
+	<div class="header"> 
+		<div class="jumbotron header_bgimg text-center">        	
+			<h1>BAB联盟</h1>	        
+			<p>发布需求到BAB联盟平台 ，快速为您匹配专业的服务商来解决需求难题</p>
+			<p>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">点击此处了解更多</button>
+			</p>
+		</div> 
+		<div class="bottom-header">
+			<div class="container">
+				<div class="header-bottom-left">
+					<div class="logo">
+						<a href="index.html"><img   src="../pc/images/bab.jpg" style="border-radius: 5px;" width="250" height="80" ></a>
+					</div>
+					<!-- 搜索栏 -->
+					<div class="search">
+						<input type="text"  value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" >
+						<input type="submit"  value="搜索"> 
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="header-bottom-right">
+					<ul class="men-grid">
+						<li><a href="index.html"><span> </span>首页</a></li>
+						
+						<!-- <li><a href="login.html"><span> </span>我的账户</a></li> -->
+						<!-- <li class="login"><a href="login.html"><span> </span>LOGIN</a>|</li> -->
+						<li class="cart" data-toggle="modal" data-target="#myModal"><a href="#"><span> </span>技术咨询</a></li>
+					</ul>
+					<!-- <div class="sign-up-right">
+						<a href="register.html">SIGNUP</a>
+					</div> -->
+				</div>
+				<div class="clearfix"> </div>	
+			</div>
+		</div>
+	</div>
+	<!--container-->
+	<div class="container">
+		 
+            		<h3>需求简述</h3>
+            		<div class="contact-form">
+						<!-- target="nm_iframe" -->
+							<form onsubmit="return save()"  class="form-horizontal" method="POST" id="registSubmit" action="http://47.97.182.0:8080/treeace/postyouwant" enctype="multipart/form-data" > 
+								 <div class="form-group">
+								 	 <label class="col-sm-1 control-label">项目名称</label>
+								 	 <div class="col-sm-5"> <input type="text" class="form-control" name="projectName" id="projectName" placeholder="请输入你的项目名称"> </div>
+								 	 
+								 </div>
+								 <div class="form-group">
+								 	<textarea name="need" value="Message" onfocus="this.value= '';" onblur="if (this.value == '') {this.value = '请您简要描述您的需求，实现的功能，效果等：如：做一个类似于滴滴打车的APP，做个像淘宝一样的网站；';}">请您简要描述您的需求，实现的功能，效果等：如：做一个类似于滴滴打车的APP，做个像淘宝一样的网站；
+								 	</textarea>
+								 </div>
+								 <div class="form-group">
+								 	 <label class="col-sm-2 control-label">需求附件*</label>
+								 	 <div class="col-sm-10"> <input type="file" name="file" id="inputfile"  > </div>
+								 	 
+								 </div>
+								<div class="form-group"><h3>请输入您预期的项目工期、价格：</h3></div>
+								<div class="form-group">
+									<label class="col-sm-1 control-label">预交日期*</label>
+									<div class="col-sm-5">  
+										<input class="form-control layer-date" placeholder="请输入你的预期交付日期" 
+										onclick="laydate({istime: true, format: 'YYYY/MM/DD hh:mm:ss'})">
+									</div>
+									<label for="inputtext" class="col-sm-1 control-label">预期工期*</label>
+									<div class="col-sm-5"> 
+										<input type="text" class="form-control" name="day" id="day" 
+										placeholder="请输入你的预期工期" required> 
+									</div>
+								  
+								</div>
+								<div class="form-group">
+									<label class="col-sm-1 control-label">预期价格*</label>
+									<div class="col-sm-5"> <input type="text" class="form-control" name="price" id="price" placeholder="请输入你的预期价格" required> </div>
+									<label for="inputtext" class="col-sm-1 control-label">可否议价*</label>
+									<div class="col-sm-5"> 
+										<select  name="flag"  class="form-control">
+											<option value="0">可以议价</option>
+											<option value="1">不可议价</option> 
+										</select>
+									</div>
+								  
+								</div> 
+								<div class="form-group"><h3>请输入您的联系方式：</h3></div>
+								<div class="form-group">
+									<label class="col-sm-1 control-label">邮箱*</label>
+									<div class="col-sm-5"> <input type="email" class="form-control" name="email" id="email" placeholder="请输入你的邮箱" > </div>
+									<label for="inputtext" class="col-sm-1 control-label">手机号*</label>
+									<div class="col-sm-5"> <input type="text" class="form-control" name="telephone"  id="telephone" placeholder="请输入你的手机号"> </div>
+								  
+								</div>
+								<div class="form-group">
+									<label class="col-sm-1 control-label">QQ账号*</label>
+									<div class="col-sm-5"> <input type="text" class="form-control"  name="qq" id="qq" placeholder="请输入你的QQ账号"> </div>
+									<label for="inputtext" class="col-sm-1 control-label">微信账号*</label>
+									<div class="col-sm-5"> <input type="text" class="form-control"  name="weixin" id="weixin" placeholder="请输入你的微信账号"> </div>
+								  
+								</div>
+								
+								 <div class="form-group">
+								 	<div class="col-sm-11">   </div>
+								 	<div class="col-sm-1">  <input type="submit" value="发布需求"> </div>
+								 </div>
+							</form> 
+					</div>
+     <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+	 <div class="row">
+		 <div class="col-sm-11">  
+		   <address class="address"> 
+		  	<dl>
+		  		<dt>联系我们</dt> 
+		  		<dd>联系电话:<span> +17630054772</span></dd>
+		  		<!-- <dd>传真: <span>+1 800 658 5784</span></dd> -->
+		  		<dd>邮箱:&nbsp; <a href="mailto@vintage.com">787928785@qq.com</a></dd>
+		  	</dl>
+		  </address>
+		  </div> 
+	 </div>
+	</div>
+	
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" 
+							aria-hidden="true">×
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						提出你的疑惑，随后我们会与你联系
+					</h4>
+				</div>
+				<div class="modal-body">
+					  <form role="form">
+						<div class="form-group">
+						<label for="name">疑惑</label>
+						<textarea class="form-control" rows="3"></textarea>
+						<input type="text" class="form-control" id="inputtext" placeholder="请输入你的手机号码">
+						</div> 
+					  </form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"  data-dismiss="modal">关闭 </button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"> 提交更改 </button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!--footer-->
+	<!-- <div class="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="latter">
+					<h6>NEWS-LATTER</h6>
+					<div class="sub-left-right">
+						<form>
+							<input type="text" value="Enter email here"onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter email here';}" />
+							<input type="submit" value="SUBSCRIBE" />
+						</form>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="latter-right">
+					<p>FOLLOW US</p>
+					<ul class="face-in-to">
+						<li><a href="#"><span> </span></a></li>
+						<li><a href="#"><span class="facebook-in"> </span></a></li>
+						<div class="clearfix"> </div>
+					</ul>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="footer-bottom-cate">
+					<h6>CATEGORIES</h6>
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li ><a href="#">Dignissim neque</a></li>
+						<li ><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+						<li ><a href="#">Urna ac tortor sc</a></li>
+						<li><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Urna ac tortor sc</a></li>
+						<li ><a href="#">Eget nisi laoreet</a></li>
+						<li ><a href="#">Faciisis ornare</a></li>
+					</ul>
+				</div>
+				<div class="footer-bottom-cate bottom-grid-cat">
+					<h6>FEATURE PROJECTS</h6>
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li ><a href="#">Dignissim neque</a></li>
+						<li ><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+					</ul>
+				</div>
+				<div class="footer-bottom-cate">
+					<h6>TOP BRANDS</h6>
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li ><a href="#">Dignissim neque</a></li>
+						<li ><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+						<li ><a href="#">Urna ac tortor sc</a></li>
+						<li><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Urna ac tortor sc</a></li>
+						<li ><a href="#">Eget nisi laoreet</a></li>
+						<li ><a href="#">Faciisis ornare</a></li>
+					</ul>
+				</div>
+				<div class="footer-bottom-cate cate-bottom">
+					<h6>OUR ADDERSS</h6>
+					<ul>
+						<li>Aliquam metus  dui. </li>
+						<li>orci, ornareidquet</li>
+						<li> ut,DUI.</li>
+						<li >nisi, dignissim</li>
+						<li >gravida at.</li>
+						<li class="phone">PH : 6985792466</li>
+						<li class="temp"> <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+ -->
+</body>
+</html>
