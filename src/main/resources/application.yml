@@ -1,7 +1,7 @@
 spring:
   datasource :
     driverClassName : com.mysql.jdbc.Driver
-    url : jdbc:mysql://47.97.182.0:3306/terrace?useUnicode=true&amp;characterEncoding=UTF-8
+    url : jdbc:mysql://localhost:3306/terrace?useUnicode=true&amp;characterEncoding=UTF-8
     username : root
     password : root
     type: com.alibaba.druid.pool.DruidDataSource
@@ -30,7 +30,7 @@ spring:
       dialect : org.hibernate.dialect.MySQL5Dialect
     #redis\u7684\u914D\u7F6E
 # thymeleaf
-  thymeleaf:
+  thymeleaf:47.97.182.0
    prefix: classpath:/templates/
    check-template-location: true
    suffix: .html
